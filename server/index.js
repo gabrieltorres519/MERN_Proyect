@@ -1,12 +1,7 @@
-import express from 'express'
-import postsRoutes from './routes/posts.routes.js';
 import {connectDB} from './db.js'
 import {PORT} from './config.js'
+import app from './app.js'
 
-
-
-const app = express();
-app.use(postsRoutes)
 app.listen(PORT)
 connectDB()
 

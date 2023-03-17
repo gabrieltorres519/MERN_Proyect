@@ -13,7 +13,7 @@ const router = Router();
 router.get("/posts", getPosts);
 
 // Obtener registro por _id
-router.get("/posts:id", getPost);
+router.get("/posts/:id", getPost);
 
 // Insertar registro
 router.post("/posts", createPost);

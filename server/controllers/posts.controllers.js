@@ -15,13 +15,19 @@ export const createPost = async (req,res)=> {
 }
 // Función modificar dato
 export const updatePost = async (req,res)=> {
-    console.log(req.params)
-    console.log(req.body)
-    await Post.findByIdAndUpdate(req.params.id,body)
+    // console.log(req.params)
+    // console.log(req.body)
+    // const post = await Post.findByIdAndUpdate(req.params.id,req.body)
+    const post = await Post.updateOne({_id: req.params.id},req.body,{new:true})
+
+    console.log(post)
     return res.send('Post Modificado')
 }
 
-export const removePost = (req,res)=> res.send('Eliminar post')
+export const removePost = (req,res)=> {
+    
+    res.send('Eliminar post')
+}
 export const getPost = (req,res)=> res.send('Mostrar post')
 
 

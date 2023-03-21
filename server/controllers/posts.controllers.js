@@ -3,46 +3,80 @@ import Post from "../models/Posts.js"
 
 //Función que regresa todos los datos de Posts
 export const getPosts = async (req,res)=> {
-    const posts = await Post.find() 
-    res.send(posts)
+    try {
+        // throw new Error('Nuevo mensaje de error')
+        const posts = await Post.find() 
+        res.send(posts)
+    } catch (error) {
+        console.error(error.message)
+        return res.status(500).json({message: error.message})
+    }
+
 }
 
 
 // Función parainsertar un dato
 export const createPost = async (req,res)=> {
-    const {title, description} = req.body
-    console.log(req.body)
-    const newPost = new Post({title,description})
-    await newPost.save()
-    console.log(newPost)
-    return res.json(newPost)
+    try {
+        const {title, description} = req.body
+        console.log(req.body)
+        const newPost = new Post({title,description})
+        await newPost.save()
+        console.log(newPost)
+        return res.json(newPost)
+    } catch (error) {
+        console.error(error.message)
+        return res.status(500).json({message: error.message})
+    }
+
 }
 
 
 // Función modificar dato
 export const updatePost = async (req,res)=> {
-    // console.log(req.params)
-    // console.log(req.body)
-    // const post = await Post.findByIdAndUpdate(req.params.id,req.body)
-    const post = await Post.updateOne({_id: req.params.id},req.body,{new:true})
+    try {
+        // console.log(req.params)
+        // console.log(req.body)
+        // const post = await Post.findByIdAndUpdate(req.params.id,req.body)
+        const post = await Post.updateOne({_id: req.params.id},req.body,{new:true})
 
-    console.log(post)
-    return res.send('Post Modificado')
+        console.log(post)
+        return res.send('Post Modificado')
+            
+    } catch (error) {
+        console.error(error.message)
+        return res.status(500).json({message: error.message})
+    }
+
 }
 
 // Función para eliminar datos
 export const removePost = async (req,res)=> {
-    const postRemoved = await Post.findByIdAndDelete({_id: req.params.id})
+    try {
+
+        const postRemoved = await Post.findByIdAndDelete({_id: req.params.id})
     
-    if (!postRemoved) return res.sendStatus(404)
-    return res.sendStatus(204)
+        if (!postRemoved) return res.sendStatus(404)
+        return res.sendStatus(204)
+        
+    } catch (error) {
+        console.error(error.message)
+        return res.status(500).json({message: error.message})
+    }
+
 }
 
 
 export const getPost = async (req,res)=> {
-    const post = await Post.findById({_id: req.params.id})
-    if (!post) return res.sendStatus(404)
-    return res.json(post)
+    try {
+        const post = await Post.findById({_id: req.params.id})
+        if (!post) return res.sendStatus(404)
+        return res.json(post)
+    } catch (error) {
+        console.error(error.message)
+        return res.status(500).json({message: error.message})
+    }
+
 }
 
 

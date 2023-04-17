@@ -7,8 +7,11 @@ const app = express();
 
 // Middlewares 
 app.use(express.json()) // Para poder utilizar json en los request a la base de datos 
-app.use(fileUpload())
-
+app.use(fileUpload({
+    useTempFiles:true,
+    tempFileDir: './upload', // Crea un carpeta en la que guardaremos la imagen de manera temporal en la raiz del proyecto 
+}))
+ 
 //Rutas
 app.use(postsRoutes)
 

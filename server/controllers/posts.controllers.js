@@ -1,4 +1,6 @@
 import Post from "../models/Posts.js"
+import { uploadImage, deleteImage } from "../libs/cloudinary.js"
+import fs from 'fs-extra'
 
 
 //Función que regresa todos los datos de Posts
@@ -14,16 +16,27 @@ export const getPosts = async (req,res)=> {
 
 }
 
-
+ 
 // Función parainsertar un dato
 export const createPost = async (req,res)=> {
     try {
         const {title, description} = req.body
-        console.log(req.body)
-        const newPost = new Post({title,description})
+        let image;
+        if(req.files.image){
+            const result = await uploadImage(req.files.image.tempFilePath)
+            // console.log(res)
+            await fs.remove(req.files.image.tempFilePath)
+            image = {
+                url: result.secure_url,
+                public_id: result.public_id
+            }
+        }
+        // console.log(req.body)
+        const newPost = new Post({title,description,image})
         await newPost.save()
-        console.log(newPost)
+        // console.log(newPost)
         return res.json(newPost)
+        
     } catch (error) {
         console.error(error.message)
         return res.status(500).json({message: error.message})
@@ -38,9 +51,9 @@ export const updatePost = async (req,res)=> {
         // console.log(req.params)
         // console.log(req.body)
         // const post = await Post.findByIdAndUpdate(req.params.id,req.body)
-        const post = await Post.updateOne({_id: req.params.id},req.body,{new:true})
+        const updatedPost = await Post.updateOne({_id: req.params.id},req.body,{new:true})
 
-        console.log(post)
+        console.log(updatedPost)
         return res.send('Post Modificado')
             
     } catch (error) {
@@ -57,7 +70,13 @@ export const removePost = async (req,res)=> {
         const postRemoved = await Post.findByIdAndDelete({_id: req.params.id})
     
         if (!postRemoved) return res.sendStatus(404)
+
+        if(postRemoved.image.public_id){
+            await deleteImage(postRemoved.image.public_id)
+        }
+
         return res.sendStatus(204)
+
         
     } catch (error) {
         console.error(error.message)

@@ -9,10 +9,15 @@ export function PostForm(){
                     description: ''
                 }}
             >
-                <Form>
+            
+            {(handleSubmit) => (
+                <Form onSubmit={handleSubmit}>
                     <Field name='title' placeholder="title"/>
                     <Field name='description' placeholder="title"/>
+                    <button>Save</button>
                 </Form>
+            )}
+
             </Formik>
         </div>
     )

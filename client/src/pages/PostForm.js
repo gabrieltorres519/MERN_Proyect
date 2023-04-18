@@ -3,10 +3,15 @@ import {Formik, Form, Field} from 'formik'
 export function PostForm(){
     return (
         <div>
-            <Formik>
+            <Formik
+                initialValues={{
+                    title: '',
+                    description: ''
+                }}
+            >
                 <Form>
-                    <Field placeholder="title"/>
-                    <Field placeholder="title"/>
+                    <Field name='title' placeholder="title"/>
+                    <Field name='description' placeholder="title"/>
                 </Form>
             </Formik>
         </div>

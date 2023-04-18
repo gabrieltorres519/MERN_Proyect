@@ -1,6 +1,9 @@
 import {Formik, Form, Field} from 'formik'
+import { usePosts } from '../context/postContext'
 
 export function PostForm(){
+
+    const {createPosts} = usePosts()
     return (
         <div>
             <Formik
@@ -9,7 +12,7 @@ export function PostForm(){
                     description: ''
                 }}
                 onSubmit={(values,actions)=>{
-                    console.log(values)
+                    createPosts(values)
                 }}
             >
             
@@ -17,7 +20,7 @@ export function PostForm(){
                 <Form onSubmit={handleSubmit}>
                     <Field name='title' placeholder="title"/>
                     <Field name='description' placeholder="description"/>
-                    <button>Save</button>
+                    <button type='submit'>Save</button>
                 </Form>
             )}
 

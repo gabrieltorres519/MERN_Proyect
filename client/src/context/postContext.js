@@ -22,7 +22,7 @@ export const PostProvider = ({children}) => {
     const createPosts = async (post) => {
         // console.log({postContext: post})
         const res = await createPostsRequest(post)
-        console.log(res)
+        console.log(res.data)
     }
 
     useEffect(() => {

@@ -20,9 +20,12 @@ export function HomePage(){
 
             <Link to={'/new'}>Create New Post</Link>
             <br/>
-            {posts.map(post => (
-                <PostCard post={post} key={post._id} />
-            ))} 
+            <div className="grid grid-cols-3 gap-2">
+                {posts.map(post => (
+                    <PostCard post={post} key={post._id} />
+                ))} 
+            </div>
+
         </div>
  
     )

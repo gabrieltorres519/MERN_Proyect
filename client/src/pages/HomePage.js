@@ -1,6 +1,7 @@
 import { usePosts } from "../context/postContext"
 import {VscEmptyWindow} from "react-icons/vsc"
 import { Link } from "react-router-dom"
+import { PostCard } from "../components/PostCard"
 
 export function HomePage(){
 
@@ -20,9 +21,7 @@ export function HomePage(){
             <Link to={'/new'}>Create New Post</Link>
             <br/>
             {posts.map(post => (
-                <div key={post._id}>
-                    {post.title}
-                </div>
+                <PostCard post={post} key={post._id} />
             ))} 
         </div>
  

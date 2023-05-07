@@ -3,18 +3,22 @@ import toast from 'react-hot-toast'
 
 export function PostCard({post}){
 
-    const handleDelete = () =>{
+    const handleDelete = (_id) =>{
         toast((t)=> (
             <div>
-                <p>Estás seguro de eliminar la nota?</p>
+                <p className='text-white'>Estás seguro de eliminar la nota? <strong>{_id}</strong></p>
                 <div>
-                    <button>Delete</button>
+                    <button className='bg-red-500 hover:bg-red-400 px-3 py-2 text-sm text-white rounded-sm mx-2'>Delete</button>
                     <button className='bg-slate-400 hover:bg-slate-500 px-3 py-2 text-white rounded-sm mx-2' 
                         onClick={()=> toast.dismiss(t.id)}
                     >Cancel</button>
                 </div>
             </div>
-        ))
+        ), {
+            style: {
+                background: "#202020"
+            }
+        })
     }
 
     return (
@@ -25,7 +29,7 @@ export function PostCard({post}){
                         {post.title}
                     </h3>
                     <button className='bg-red-600 text-sm px-2 py-1 rounded-sm'
-                        onClick={handleDelete}
+                        onClick={()=> handleDelete(post._id)}
                     >
                         Delete
                     </button>
